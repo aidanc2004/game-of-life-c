@@ -1,15 +1,14 @@
-// TODO: change functions to make it so i dont have to use constants, then i
-//       can take the width and height from the program args.
-
 #include <stdio.h>
 #include "board.h"
 
+// completely fill the board with cell
 void fill_board(int board[][COLS], int cell) {
     for (int i = 0; i < ROWS; ++i)
         for (int j = 0; j < COLS; ++j)
             board[i][j] = cell;
 }
 
+// print out the board with an 'x' for an alive cell and ' ' for a dead one
 void print_board(int board[][COLS]) {
     for (int i = 0; i < ROWS; ++i) {
         for (int j = 0; j < COLS; ++j) {
@@ -19,6 +18,7 @@ void print_board(int board[][COLS]) {
     }
 }
 
+// get the number of neighbors of a cell
 int check_neighbors(int board[][COLS], int i, int j) {
     int n = 0;
     
@@ -35,15 +35,17 @@ int check_neighbors(int board[][COLS], int i, int j) {
     return n;
 }
 
+// check if a cell is alive and is on the board
 int is_alive(int board[][COLS], int i, int j) {
     return board[i][j] && in_bounds(i, j);
 }
 
+// check if a cell is in the bounds of the board
 int in_bounds(int i, int j) {
     return i < ROWS && i >= 0 && j < COLS && j >= 0;
 }
 
-// change name of either update_cell or update_board, one returns void and one returns int
+// check if cell should be alive or dead next generation
 int update_cell(int board[][COLS], int i, int j) {
     int neighbors = check_neighbors(board, i, j);
 
@@ -54,6 +56,7 @@ int update_cell(int board[][COLS], int i, int j) {
     }
 }
 
+// update all of the cells in current and put the updated cells in next
 void update_board(int current[][COLS], int next[][COLS]) {
     for (int i = 0; i < ROWS; ++i) {
         for (int j = 0; j < COLS; ++j) {
@@ -62,6 +65,7 @@ void update_board(int current[][COLS], int next[][COLS]) {
     }
 }
 
+// move all of the cells from one board to another
 void move_board(int src[][COLS], int dst[][COLS]) {
     for (int i = 0; i < ROWS; ++i)
         for (int j = 0; j < COLS; ++j)
